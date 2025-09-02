@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hello World - Newspaper Template</title>
+<style>
+  /* Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin:0; padding:0;
+    font-family: Georgia, serif;
+    color: #111;
+    background: #fff;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+  img {
+    max-width: 100%;
+    display: block;
+  }
+  a {
+    color: #111;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  a:hover, a:focus {
+    text-decoration: underline;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: normal;
+  }
+  ul {
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  p {
+    margin: 0 0 1rem 0;
+  }
+
+  /* Container for page width */
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  /* HEADER TOP BAR */
+  header.topbar {
+    border-bottom: 1px solid #000;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    padding: 6px 15px 6px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 16px;
+    gap: 10px;
+    letter-spacing: 0.07em;
+  }
+  .topbar-left .menu-icon {
+    font-weight: normal;
+    font-size: 14px;
+    border: 1px solid #000;
+    padding: 2px 6px 0 6px;
+    cursor: pointer;
+  }
+  .topbar-left .date {
+    font-weight: normal;
+    font-size: 12px;
+  }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .topbar-right .social-icons a {
+    font-size: 14px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    line-height: 22px;
+    font-weight: 700;
+  }
+  .topbar-right .search-form {
+    display: flex;
+    align-items: center;
+  }
+  .topbar-right .search-form input[type="text"] {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    padding: 2px 6px;
+    border: 1px solid #000;
+    border-right: none;
+    width: 100px;
+  }
+  .topbar-right .search-form button {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    border: 1px solid #000;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+    padding: 3px 8px;
+  }
+  .topbar-right .search-form button:hover,
+  .topbar-right .search-form button:focus {
+    background: #222;
+  }
+
+  /* Title section */
+  header.title-section {
+    margin: 18px 0 12px 0;
+    padding: 0 15px;
+    border-bottom: 1px solid #000;
+    text-align: center;
+  }
+  header.title-section h1 {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: 900;
+    font-size: 42px;
+    letter-spacing: 0.05em;
+  }
+  header.title-section .subtitle {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    margin-top: 4px;
+  }
+  header.title-section .subtitle span {
+    margin: 0 9px;
+  }
+
+  /* Navigation bar */
+  nav.main-nav {
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+  }
+  nav.main-nav a {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  nav.main-nav a:hover,
+  nav.main-nav a:focus {
+    text-decoration: underline;
+  }
+
+  /* Main layout */
+  main.content {
+    display: flex;
+    gap: 30px;
+    margin: 20px 15px 40px;
+  }
+  main.content > section.posts-left {
+    flex: 2.2;
+  }
+  main.content > aside.posts-right {
+    flex: 1;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+  }
+
+  /* Top four teaser previews */
+  .teaser-previews {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+  }
+  .teaser-previews article {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+  }
+  .teaser-previews article img {
+    width: 75px;
+    flex-shrink: 0;
+  }
+  .teaser-previews article .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    line-height: 1.1;
+  }
+  .teaser-previews article .info h4 {
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  .teaser-previews article .info .meta {
+    font-size: 9px;
+    color: #777;
+  }
+
+  /* Featured big image & article */
+  .featured-article {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 32px;
+    font-family: Arial, sans-serif;
+  }
+  .featured-article .image-container {
+    flex: 1.4;
+    position: relative;
+    overflow: hidden;
+  }
+  .featured-article .image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .featured-article .category-label {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #000;
+    color: #fff;
+    font-size: 12px;
+    padding: 3px 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    z-index: 2;
+    font-family: Arial, sans-serif;
+  }
+  .featured-article .text-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: 1px solid #000;
+    padding-bottom: 10px;
+  }
+  .featured-article h2 {
+    font-weight: bold;
+    font-size: 19px;
+    line-height: 1.1;
+    margin-bottom: 15px;
+  }
+  .author-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+  }
+  .author-info img {
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .author-info .author-name {
+    font-weight: 700;
+  }
+  .author-info .date {
+    font-size: 9px;
+    color: #999;
+  }
+  .featured-article .summary {
+    font-size: 11px;
+    color: #999;
+    line-height: 1.2;
+    margin-bottom: 0;
+  }
+  .carousel-dots {
+    text-align: right;
+    margin-top: 8px;
+  }
+  .carousel-dots span {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-left: 6px;
+    background-color: transparent;
+    border: 1px solid #333;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .carousel-dots span.active {
+    background-color: #333;
+  }
+
+  /* Recent posts heading */
+  .recent-posts-header {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    margin-bottom: 12px;
+    font-size: 15px;
+  }
+  .recent-posts-header span {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 0 16px;
+  }
+  .recent-posts-header::before,
+  .recent-posts-header::after {
+    border-bottom: 1px solid #000;
+    content: "";
+    display: inline-block;
+    width: 135px;
+    vertical-align: middle;
+  }
+
+  /* Recent posts list */
+  .recent-posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .recent-posts-list article {
+    display: grid;
+    grid-template-columns: 105px 1fr;
+    gap: 15px;
+    font-family: Arial, sans-serif;
+  }
+  .recent-posts-list article img {
+    width: 100%;
+    height: 70px;
+    object-fit: cover;
+  }
+  .recent-posts-list article .post-content h3 {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .recent-posts-list article .post-meta {
+    font-size: 10px;
+    color: #999;
+    letter-spacing: 0.1em;
+  }
+  .recent-posts-list article .post-meta span {
+    text-transform: uppercase;
+    margin-right: 6px;
+  }
+
+  /* Sidebar right - wrapper */
+  aside.posts-right {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* Popular Articles block */
+  .sidebar-block {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  .sidebar-block h3 {
+    margin-bottom: 12px;
+    position: relative;
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-left: 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+  .sidebar-block h3::before {
+    position: absolute;
+    content: "•";
+    left: -12px;
+    color: black;
+    font-weight: 900;
+  }
+  .popular-articles-list li {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 13px;
+  }
+  .popular-articles-list li .index {
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+    width: 15px;
+    font-size: 14px;
+  }
+  .popular-articles-list li .article-info {
+    flex: 1;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+  }
+  .popular-articles-list li .article-info h4 {
+    font-weight: 700;
+    font-size: 12px;
+    margin-bottom: 2px;
+    line-height: 1.1;
+  }
+  .popular-articles-list li .article-info span {
+    font-size: 9px;
+    color: #888;
+    letter-spacing: 0.07em;
+  }
+  .popular-articles-list li img {
+    width: 65px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  /* Search form in sidebar */
+  .sidebar-search {
+    font-family: Arial, sans-serif;
+  }
+  .sidebar-search label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .sidebar-search input[type="text"] {
+    padding: 7px 10px;
+    font-size: 13px;
+    border: 1px solid #000;
+    width: 100%;
+    outline-offset: 2px;
+    font-family: Arial, sans-serif;
+  }
+  .sidebar-search button {
+    margin-top: 7px;
+    background-color: #000;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 6px 12px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .sidebar-search button:hover,
+  .sidebar-search button:focus {
+    background-color: #333;
+  }
+
+  /* Trending block */
+  .trending-block .image-container {
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .trending-block .image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .trending-block .category-label {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #000;
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-family: Arial, sans-serif;
+  }
+  .trending-block p {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+
+  .trending-list {
+    margin-top: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .trending-list article {
+    display: flex;
+    gap: 12px;
+  }
+  .trending-list img {
+    width: 70px;
+    height: 50px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .trending-list h4 {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1.05;
+  }
+
+  /* Tags cloud area */
+  .tags-cloud {
+    border-top: 1px solid #ddd;
+    padding-top: 12px;
+  }
+  .tags-cloud .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 11px;
+    font-family: Arial, sans-serif;
+  }
+  .tags-cloud .tags button {
+    background: #eee;
+    border: none;
+    font-size: 11px;
+    font-weight: 700;
+    color: #222;
+    padding: 5px 9px;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    border-radius: 3px;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.15s ease-in-out;
+  }
+  .tags-cloud .tags button:hover,
+  .tags-cloud .tags button:focus {
+    background-color: #ccc;
+  }
+  .tags-cloud .tag-post {
+    display: flex;
+    gap: 10px;
+  }
+  .tags-cloud .tag-post img {
+    width: 65px;
+    height: 60px;
+    object-fit: cover;
+  }
+  .tags-cloud .tag-post div {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+  }
+  .tags-cloud .tag-post div p {
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 3px;
+  }
+  .tags-cloud .tag-post div span {
+    font-size: 8px;
+    letter-spacing: 0.07em;
+    color: #888;
+  }
+
+  /* Pagination */
+  .pagination {
+    margin: 35px 0 30px 0;
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    user-select: none;
+  }
+  .pagination span,
+  .pagination a {
+    padding: 4px 12px;
+    cursor: pointer;
+  }
+  .pagination span,
+  .pagination a:hover,
+  .pagination a:focus {
+    text-decoration: underline;
+  }
+  .pagination .current {
+    text-decoration: none;
+    font-weight: 900;
+  }
+
+  /* Bottom 4 columns: Most Comments, Latest, Categories, Instagram */
+  .bottom-widgets {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+  }
+  .bottom-widgets > div {
+    flex: 1;
+  }
+
+  /* Most Comments */
+  .most-comments h4,
+  .latest-posts h4,
+  .categories-widget h4,
+  .instagram-widget h4 {
+    border-bottom: 1px solid #000;
+    padding-bottom: 8px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-weight: 700;
+  }
+  .most-comments ol {
+    list-style: decimal inside;
+  }
+  .most-comments ol li {
+    margin-bottom: 12px;
+    line-height: 1.15;
+  }
+
+  /* Latest Posts */
+  .latest-posts article {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .latest-posts img {
+    width: 70px;
+    height: 52px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .latest-posts h5 {
+    font-weight: 700;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.1;
+  }
+
+  /* Categories */
+  .categories-widget ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .categories-widget ul li {
+    margin-bottom: 8px;
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+  }
+  .categories-widget ul li::before {
+    content: "›";
+    margin-right: 6px;
+    color: black;
+    font-weight: 900;
+  }
+
+  /* Instagram grid */
+  .instagram-widget .instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .instagram-widget .instagram-grid img {
+    object-fit: cover;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Footer */
+  footer.footer-section {
+    border-top: 1px solid #000;
+    font-family: "Times New Roman", Times, serif;
+    text-align: center;
+    padding: 20px 15px 35px;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: #222;
+    font-weight: 700;
+  }
+  footer.footer-section .footer-title {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  footer.footer-section .footer-icons {
+    margin-bottom: 10px;
+  }
+  footer.footer-section .footer-icons span {
+    border: 1px solid #000;
+    display: inline-block;
+    font-weight: 700;
+    width: 25px;
+    height: 25px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 25px;
+    margin: 0 7px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  footer.footer-section .copyright {
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    color: #444;
+    letter-spacing: 0.04em;
+  }
+
+  /* Scroll top text in bottom right */
+  #takeMeTop {
+    position: fixed;
+    bottom: 18px;
+    right: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    cursor: pointer;
+    color: #000;
+    user-select: none;
+    letter-spacing: 0.1em;
+  }
+  #takeMeTop:hover,
+  #takeMeTop:focus {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar container" role="banner" aria-label="Top Bar">
+  <div class="topbar-left" aria-label="Menu and date">
+    <span class="menu-icon" aria-label="Menu Button">≡ MORE</span>
+    <time class="date" datetime="2023-01-06">Friday, 6 January 2023</time>
+  </div>
+  <div class="topbar-right" aria-label="Social media and search">
+    <nav class="social-icons" aria-label="Social Media Links">
+      <a href="#" aria-label="Facebook">F</a>
+      <a href="#" aria-label="Twitter">O</a>
+      <a href="#" aria-label="Google">G</a>
+      <a href="#" aria-label="Pinterest">P</a>
+    </nav>
+    <form class="search-form" role="search" aria-label="Site Search">
+      <input type="text" placeholder="SEARCH" aria-label="Search input" />
+      <button type="submit" aria-label="Search Button">SEARCH</button>
+    </form>
+  </div>
+</header>
+
+<header class="title-section container" role="heading" aria-level="1">
+  <h1>HELLO WORLD</h1>
+  <div class="subtitle" aria-label="Page subtitle">
+    <span>NEWSPAPER</span>
+    <span>/ MAGAZINE</span>
+    <span>/ PUBLISHER</span>
+  </div>
+</header>
+
+<nav class="main-nav container" role="navigation" aria-label="Main Menu">
+  <a href="#">HOME</a>
+  <a href="#">LAYOUT</a>
+  <a href="#">NEWS</a>
+  <a href="#">ECONOMY</a>
+  <a href="#">ENTERTAINMENT</a>
+  <a href="#">JOBS</a>
+</nav>
+
+<main class="content container" role="main">
+
+  <section class="posts-left" aria-label="Main posts area">
+
+    <section class="teaser-previews" aria-label="Top news highlights">
+      <article>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7b3c9e09-d446-4d96-945f-422991308cfa.png" alt="Urban street with vintage car and building scene in cool colors" />
+        <div class="info">
+          <h4>Lorem ipsum dui sollic itudin</h4>
+          <div class="meta">2 SEP, 2023 &bull; 90 VIEWS</div>
+        </div>
+      </article>
+      <article>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/abddcf96-5c09-4fc8-8c59-2eec24b234a4.png" alt="Man with beard and hat looking directly with mysterious expression" />
+        <div class="info">
+          <h4>Ut enim ad minima veniam</h4>
+          <div class="meta">28 AUG, 2023 &bull; 78 VIEWS</div>
+        </div>
+      </article>
+      <article>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/de704600-7d28-47a8-a1d1-cc9aaa46df34.png" alt="Vintage city urban scene at dusk with cars and warm lights" />
+        <div class="info">
+          <h4>Quis autem vel eum iure reperit</h4>
+          <div class="meta">16 AUG, 2023 &bull; 112 VIEWS</div>
+        </div>
+      </article>
+      <article>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7bef2622-d436-4dc8-8a9b-05d5d1828984.png" alt="Modern photo portrait of a woman with unique style and expression" />
+        <div class="info">
+          <h4>At vero eos et accu samus et iusto</h4>
+          <div class="meta">16 JUN, 2023 &bull; 328 VIEWS</div>
+        </div>
+      </article>
+    </section>
+
+    <article class="featured-article" aria-label="Featured Article">
+      <div class="image-container">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/390c5f2a-3271-4190-b7aa-a9e2d08b6fb2.png" alt="Black and white close-up portrait of an elderly man with thick white beard in city lights background" />
+        <div class="category-label">Fashion, Men</div>
+      </div>
+      <div class="text-container">
+        <h2>Lorem ipsum dui sollic itudin praesent ut mollis primis eros torquent fames</h2>
+        <div class="author-info">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/230cbcde-0759-4a07-bd27-edf5b90a707e.png" alt="Photo of Steven Job" />
+          <div>
+            <div class="author-name">Steven Job</div>
+            <time class="date" datetime="2023-09-21">21 SEP, 2023</time>
+          </div>
+        </div>
+        <p class="summary">Is very common and rather normal for blogging beginners to be highly perplexed when it comes to selecting a theme for their blog. There are a plethora of free as well as paid options.</p>
+        <div class="carousel-dots" aria-label="Featured article carousel navigation">
+          <span class="active" aria-current="true" tabindex="0"></span>
+          <span tabindex="0"></span>
+          <span tabindex="0"></span>
+        </div>
+      </div>
+    </article>
+
+    <div class="recent-posts-header" aria-label="Recent Posts Heading">
+      <span>RECENT POSTS</span>
+    </div>
+
+    <section class="recent-posts-list" aria-label="List of recent posts">
+
+      <article>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0ff60f7e-2046-41b6-a0cb-4018a58b68af.png" alt="Old European street building with blue sky" />
+        <div class="post-content">
+          <h3>Magna aliqua ut enim ad minim veniam</h3>
+          <div class="post-meta">
+            <span>Steven Job</span>
+            <span>POLITICS, NEWS</span>
+            <time datetime="2023-09-18">18 SEP, 2023</time>
+          </div>
+        </div>
+      </article>
+
+      <article>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a8ff48f9-6454-41e9-ab8e-162d3967cce0.png" alt="Portrait of two stylish young women posing with elegant makeup" />
+        <div class="post-content">
+          <h3>Letraset sheets containing Lorem Ipsum passages, and more recently</h3>
+          <div class="post-meta">
+            <span>Steven Job</span>
+            <span>POLITICS, NEWS</span>
+            <time datetime="2023-09-18">18 SEP, 2023</time>
+          </div>
+        </div>
+      </article>
+
+      <article>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f92f1139-c58c-4b53-b296-29a574bceb04.png" alt="Night city street with moving cars and blinking lights" />
+        <div class="post-content">
+          <h3>There are many variations of passages of Lorem Ipsum available, but the majority have suffered</h3>
+          <div class="post-meta">
+            <span>Steven Job</span>
+            <span>POLITICS, NEWS</span>
+            <time datetime="2023-09-16">16 SEP, 2023</time>
+          </div>
+        </div>
+      </article>
+
+      <article>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/83bf4b3e-df59-47d9-9da0-119dccfd1694.png" alt="Mountain landscape with clouds and fog" />
+        <div class="post-content">
+          <h3>It uses a dictionary of over 200 Latin words, combined</h3>
+          <div class="post-meta">
+            <span>Steven Job</span>
+            <span>POLITICS, NEWS</span>
+            <time datetime="2023-09-16">16 SEP, 2023</time>
+          </div>
+        </div>
+      </article>
+
+      <article>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1641d3b5-e944-4c07-a01b-fd8637b60964.png" alt="Close-up of clothes hanging on a clothesline blowing in wind" />
+        <div class="post-content">
+          <h3>Reading is not only informed by what’s going on with us at that moment</h3>
+          <div class="post-meta">
+            <span>Steven Job</span>
+            <span>POLITICS, NEWS</span>
+            <time datetime="2023-09-18">18 SEP, 2023</time>
+          </div>
+        </div>
+      </article>
+
+      <article>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3edc4cf1-828f-458c-bfd4-f2fea22679fd.png" alt="Portrait photo of a man looking away thoughtfully" />
+        <div class="post-content">
+          <h3>What you see and what you’re experiencing as you read these</h3>
+          <div class="post-meta">
+            <span>Steven Job</span>
+            <span>POLITICS, NEWS</span>
+            <time datetime="2023-09-18">18 SEP, 2023</time>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+  </section>
+
+  <aside class="posts-right" aria-label="Sidebar">
+
+    <div class="sidebar-block popular-articles" aria-label="Popular Articles">
+      <h3>POPULAR ARTICLES</h3>
+      <ol class="popular-articles-list">
+        <li>
+          <div class="index">1.</div>
+          <div class="article-info">
+            <h4>Ut enim ad minima veniam, quis nostrum</h4>
+            <span>2 SEP, 2023 &bull; 268 VIEWS</span>
+          </div>
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f52a8e57-116c-4618-a353-a9ce9a0f9c16.png" alt="Crowd concert photo with blue and pink stage lights and people hands up" />
+        </li>
+        <li>
+          <div class="index">2.</div>
+          <div class="article-info">
+            <h4>Curace lacinia consec tetur varius</h4>
+            <span>2 SEP, 2023 &bull; 268 VIEWS</span>
+          </div>
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fb799ca2-17d7-4e46-8126-2bd024acfd93.png" alt="Night city urban street glowing orange lights parked cars empty road" />
+        </li>
+        <li>
+          <div class="index">3.</div>
+          <div class="article-info">
+            <h4>Euisomod lacus vulpu tate augue</h4>
+            <span>2 SEP, 2023 &bull; 268 VIEWS</span>
+          </div>
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/901d4e72-89ca-4056-aefb-b17a60d01f57.png" alt="Two women stylish portrait in pink tones looking at camera" />
+        </li>
+        <li>
+          <div class="index">4.</div>
+          <div class="article-info">
+            <h4>Quam mauris lorem erat est euismod</h4>
+            <span>2 SEP, 2023 &bull; 268 VIEWS</span>
+          </div>
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7a5ed21a-102a-421c-a7c7-3ac9fe093efc.png" alt="Man portrait profile photo thoughtful expression close up" />
+        </li>
+        <li>
+          <div class="index">5.</div>
+          <div class="article-info">
+            <h4>Nec eget ince ptos aenean gravida</h4>
+            <span>2 SEP, 2023 &bull; 268 VIEWS</span>
+          </div>
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0a12783e-e776-4f1b-b593-4c3f2f488b72.png" alt="Aerial view of cloudy green hills with fog drifting" />
+        </li>
+      </ol>
+    </div>
+
+    <form class="sidebar-search" role="search" aria-label="Sidebar Search">
+      <label for="sidebar-search-input">SEARCH</label>
+      <input type="text" id="sidebar-search-input" placeholder="Search..." aria-label="Search input" />
+      <button type="submit" aria-label="Search Submit Button">SEARCH</button>
+    </form>
+
+    <div class="sidebar-block trending-block" aria-label="Trending articles">
+      <h3>TRENDING</h3>
+      <div class="image-container">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6464dc52-e1f1-4555-aea4-2ad90e95ff9f.png" alt="Crowd at a concert under blue stage lighting with smoke" />
+        <div class="category-label">Legal, Blog</div>
+      </div>
+      <p>Nor again is there anyone who loves or pursues or desires to obtain</p>
+
+      <div class="trending-list" aria-label="Smaller trending articles list">
+
+        <article>
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8b69b838-48ee-4967-ad30-299caab16da2.png" alt="Concert crowd closeup with hands in air under blue lighting" />
+          <h4>Magna aliqua ut enim ad minim veniam</h4>
+        </article>
+
+        <article>
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/efdf5fe7-05c0-434e-9fdf-b461641226c3.png" alt="Night urban city street with cars and lights glowing orange" />
+          <h4>Magna aliqua ut enim ad minim veniam</h4>
+        </article>
+
+        <article>
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/032a9f8a-2d95-49d6-9bc6-4f79351aedf0.png" alt="Portrait of two young women with serious faces" />
+          <h4>Magna aliqua ut enim ad minim veniam</h4>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="sidebar-block tags-cloud" aria-label="Tags Cloud 1">
+      <h3>TAGS CLOUD</h3>
+      <div class="tags" aria-label="Clickable tags">
+        <button type="button">Business</button>
+        <button type="button">Technology</button>
+        <button type="button">Sport</button>
+        <button type="button">Art</button>
+        <button type="button">Lifestyle</button>
+        <button type="button">Three</button>
+        <button type="button">Photography</button>
+      </div>
+      <div class="tag-post">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/42067c58-3116-439a-a7fa-2b6ce7cbafea.png" alt="Night city street with moving cars and blinking lights" />
+        <div>
+          <p>Magna aliqua ut enim ad minim veniam</p>
+          <span>10 SEP, 2023</span>
+        </div>
+      </div>
+      <div class="tag-post" style="margin-top: 12px;">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6e5c1dea-0e48-4d3e-989f-f6fd70e1d539.png" alt="Portrait of two stylish young women posing with elegant makeup" />
+        <div>
+          <p>Magna aliqua ut enim ad minim veniam</p>
+          <span>18 SEP, 2023</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-block tags-cloud" aria-label="Tags Cloud 2">
+      <h3>TAGS CLOUD</h3>
+      <div class="tags" aria-label="Clickable tags second group">
+        <button type="button">Business</button>
+        <button type="button">Technology</button>
+        <button type="button">Sport</button>
+        <button type="button">Art</button>
+        <button type="button">Lifestyle</button>
+        <button type="button">Three</button>
+        <button type="button">Photography</button>
+        <button type="button">Lifestyle</button>
+        <button type="button">Art</button>
+        <button type="button">Education</button>
+        <button type="button">Social</button>
+        <button type="button">Three</button>
+      </div>
+    </div>
+
+  </aside>
+</main>
+
+<div class="container bottom-widgets" aria-label="Bottom widgets">
+
+  <section class="most-comments" aria-label="Most Comments">
+    <h4>MOST COMMENTS</h4>
+    <ol>
+      <li>Fritutois spluttered unlike ouch vivid blinked far inside</li>
+      <li>Against and lantern where a and gnashed nefarious</li>
+      <li>Ouch oh alas crud unnecessary invaluable some</li>
+      <li>And far hey much hello and bashful one save less</li>
+    </ol>
+  </section>
+
+  <section class="latest-posts" aria-label="Latest Posts">
+    <h4>LATEST</h4>
+    <article>
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/147e5e1d-2d46-4f9c-ac46-3a1a4043f460.png" alt="Concert crowd under blue lighting" />
+      <h5>Magna aliqua ut enim ad minim veniam</h5>
+    </article>
+    <article>
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4f9f55d8-0cda-4a54-ad17-164f0f5fe85f.png" alt="Night urban street with light trails" />
+      <h5>Magna aliqua ut enim ad minim veniam quis</h5>
+    </article>
+    <article>
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9283e68b-8000-463f-8454-fb4e1390a5a3.png" alt="Portrait of two young women" />
+      <h5>Magna aliqua ut enim ad minim veniam quis</h5>
+    </article>
+  </section>
+
+  <section class="categories-widget" aria-label="Categories List">
+    <h4>CATEGORIES</h4>
+    <ul>
+      <li>Business</li>
+      <li>Environment</li>
+      <li>Life style</li>
+      <li>Technology</li>
+      <li>Entertainment</li>
+      <li>Health</li>
+      <li>Politics</li>
+      <li>World</li>
+    </ul>
+  </section>
+
+  <section class="instagram-widget" aria-label="Instagram Photos">
+    <h4>INSTAGRAM</h4>
+    <div class="instagram-grid">
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/452e1ad3-a953-4a50-b0d8-f1e00319b57e.png" alt="Concert crowd under blue lighting with smoke" />
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/47d1a3f5-5f05-4394-b2a4-b2ccc3bd758c.png" alt="Night urban street with light trails" />
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fb8244a1-28be-46dd-b4ac-425781ff9bed.png" alt="Portrait of two young women" />
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1736b876-3a83-4bc0-9e8f-efa9f041370a.png" alt="Crowd at a concert with blue lighting" />
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ed403628-0ac8-435b-9d1e-918da401953b.png" alt="Night urban street with traffic light trails" />
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5448b8a1-379c-4b4d-b45d-960f3be7913a.png" alt="Close-up portrait photo of pensive man" />
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer-section" role="contentinfo" aria-label="Site footer">
+  <div class="footer-title">HELLO WORLD</div>
+  <div class="footer-icons" role="navigation" aria-label="Social media footer icons">
+    <span tabindex="0" aria-label="Facebook social icon">f</span>
+    <span tabindex="0" aria-label="Twitter social icon">v</span>
+    <span tabindex="0" aria-label="Google social icon">G</span>
+    <span tabindex="0" aria-label="Pinterest social icon">⊙</span>
+  </div>
+  <div class="copyright" aria-label="Copyright and credits">
+    © Copyright 2023, All rights reserved. Design by Alithemes.com
+  </div>
+</footer>
+
+<div id="takeMeTop" role="button" tabindex="0" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" onkeypress="if(event.key==='Enter'){window.scrollTo({top:0,behavior:'smooth'})}">
+  Take Me Top
+</div>
+
+</body>
+</html>
